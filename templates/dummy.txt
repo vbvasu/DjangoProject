@@ -1,0 +1,9 @@
+from django.db import models
+from django.contrib.auth.models import User
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    college_name = models.CharField(max_length=100)
+    document_1 = models.FileField(upload_to='documents/')
+    document_2 = models.FileField(upload_to='documents/')
+

@@ -1,0 +1,212 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Register</title>
+    <style>
+        *{margin: 0;
+        padding: 0;
+        font-family: sans-serif;
+    }
+    .hero{
+        height: 100%;
+        width: 100%;
+        background-image: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)),url({% static 'Luffy.jpg' %});
+        background-position: center;
+        background-size: cover;
+        position: absolute;
+    }
+    .formbox{
+        width: 380px;
+        height: 480px;
+        position: relative;
+        margin: 6% auto;
+        background: #fff;
+        padding: 5px;
+        overflow: hidden;
+        border-radius: 20px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .formbox .message {
+        margin-bottom: 20px;
+    }
+    
+    .buttonbox{
+        width: 220px;
+        margin: 35px auto;
+        position: relative;
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+        border-radius: 30px;
+    }
+    .toggle-btn{
+        padding: 10px 30px;
+        cursor: pointer;
+        background: transparent;
+        border: 0;
+        outline: none;
+        position: relative;
+
+    }
+    #btn{
+        top: 0;
+        left: 0;
+        position: absolute;
+        width: 110px;
+        height: 100%;
+        background: linear-gradient(to right,#4ca1af,#c4e0e5);
+        border-radius: 30px;
+        transition: .5s;
+    }
+    .input-group1{
+        top: 160px;
+        position: absolute;
+        width: 280px;
+        transition: .5s;
+    }
+    .input-group2{
+        top: 100px;
+        position: absolute;
+        width: 280px;
+        transition: .5s;
+    }
+    .input-field{
+        width: 100%;
+        padding: 10px 0;
+        margin: 5px 0;
+        border-left: 0;
+        border-top: 0;
+        border-right: 0;
+        border-bottom: 1px solid #999;
+        outline: none;
+        background: transparent;
+    }
+    .submit-btn{
+        width: 85%;
+        padding: 10px 30px;
+        cursor: pointer;
+        display: block;
+        margin: auto;
+        background: linear-gradient(to right,#4ca1af,#c4e0e5);
+        border: 0;
+        outline: none;
+        border-radius: 30px;
+    }
+    .check-box{
+        margin: 30px 10px 30px 0;
+    }
+    span{
+        color: #777;
+        font-size: 12px;
+        bottom: 68px;
+        position: absolute;
+    }
+    #login{
+        left: 50px;
+    }
+    #register{
+        left: 450px;
+    }
+    .alert.alert-danger {
+        background-color: rgba(255, 0, 0, 0.3);
+        color: #721c24;
+        border: 1px solid rgba(255, 0, 0, 0.2);
+        border-left-color: #721c24;
+        border-radius: 4px;
+        padding: 0.75rem 1.25rem;
+        margin-bottom: 1rem;
+        font-size: 14px;
+    }
+    .alert.alert-success {
+        background-color: rgba(0, 128, 0, 0.3);
+        color: #155724;
+        border: 1px solid rgba(0, 128, 0, 0.2);
+        border-left-color: #155724;
+        border-radius: 4px;
+        padding: 0.75rem 1.25rem;
+        margin-bottom: 1rem;
+        font-size: 14px;
+    }  
+    form {
+        width: 380px;
+        height: 400px;
+        margin: 40px auto;
+        padding: 5px;
+      }
+      
+      .submit-btn {
+        margin-top: 20px;
+        padding: 10px 20px;
+      }
+        
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <div class="formbox">
+            {% if messages %}
+        {% for message in messages %}
+        <div class="alert {{ message.tags }} m-2" id="msg" role="alert">
+            {{ message }}
+        </div>
+        <script>
+            setTimeout(hideMessage, 2000);
+        </script>
+        {% endfor %}
+        {% endif %}
+            <div class="buttonbox">
+                <div id="btn"></div>
+                <button type="button" class="toggle-btn" onclick="login()">Log In</button>
+                <button type="button" class="toggle-btn" onclick="register()">Register</button>
+            </div>
+            <form action="/Accounts/signin" id="login" class="input-group1" method="post">
+                {% csrf_token %}
+                <input type="text" name="Username" class="input-field" placeholder="Username" required>
+                <input type="password" name="pass1" class="input-field" placeholder="Enter Password" required>
+                <button type="submit" class="submit-btn">Login</button>
+            </form>
+            <form action="/Accounts/register" class="input-group2" id="register" method="post">
+                {% csrf_token %}
+                <input type="text" name="Username" class="input-field" placeholder="Username" required>
+                <input type="text" name="f_name" class="input-field" placeholder="First Name" required>
+                <input type="text" name="l_name" class="input-field" placeholder="Last Name" required>
+                <input type="email" name="email" class="input-field" placeholder="Email Id" required>
+                <input type="password" name="password1" class="input-field" placeholder="Enter Password" required>
+                <input type="password" name="password2" class="input-field" placeholder="Confirm Your Password" required>
+                <button type="submit" class="submit-btn">Register</button>
+            </form>
+        </div>
+    </div>
+    <script>
+        var x = document.getElementById("login");
+        var y = document.getElementById("register");
+        var z = document.getElementById("btn");
+        function register(){
+            x.style.left = "-400px";
+            y.style.left = "50px";
+            z.style.left = "110px";
+        }
+        function login(){
+            x.style.left = "50px";
+            y.style.left = "450px";
+            z.style.left = "0";
+        }
+        let alerts = document.querySelectorAll('.alert');
+        for (let i = 0; i < alerts.length; i++) {
+            setTimeout(function () {
+                alerts[i].style.opacity = "0";
+            }, 2000);
+        }
+        function hideMessage() {
+            var x = document.getElementById("msg");
+            x.style.display = "none";
+        }
+    </script>   
+</body>
+</html>
