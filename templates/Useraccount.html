@@ -465,10 +465,14 @@ header .container {
                 <div class="form-container">
                   <form>
                     {% csrf_token %}
-                    <input type="text" class="form-input" placeholder="Country" id="Country-input">
-                    <input type="email" class="form-input" placeholder="Email" id="email-input">
-                    <input type="password" class="form-input" placeholder="Password" id="password-input">
-                    <textarea name="Description" class="form-input">Description  About You @3-4 lines</textarea>
+                    <input type="text" class="form-input" placeholder="Country" id="Country-input" required>
+                    <input type="text" class="form-input" placeholder="Profession" id="Profession-input" required>
+                    <textarea name="Description" class="form-input" required >Description  About You @3-4 lines</textarea>
+                    <input type="url"  class="form-input" placeholder="GitHub Link" id="GitHub-input">
+                    <input type="url"  class="form-input" placeholder="LinkedIn Link" id="LinkedIn-input">
+                    <input type="url"  class="form-input" placeholder="Instagram Link" id="Instagram-input">
+                    <input type="tel"  class="form-input" placeholder="Phone No." id="Phone-input" required>
+                    <input type="password" class="form-input" placeholder="Password" id="password-input" required>
                     <button type="button" class="btn no-border" id="submit-button">Submit</button>
                   </form>
                 </div>
