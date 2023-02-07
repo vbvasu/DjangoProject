@@ -423,6 +423,7 @@ header .container {
 }
 .no-border {
   border: none !important;
+  width: auto !important;
 }
     </style>
 </head>
@@ -472,6 +473,145 @@ header .container {
                     <input type="url"  class="form-input" placeholder="LinkedIn Link" id="LinkedIn-input">
                     <input type="url"  class="form-input" placeholder="Instagram Link" id="Instagram-input">
                     <input type="tel"  class="form-input" placeholder="Phone No." id="Phone-input" required>
+                    <h3>Skills: </h3>
+                    <br>
+                    <p>Cloud: </p>
+                    <br>
+                    <select id="cloud" onchange="toggleTextarea(this, 'cloudSkills')" name="cloud" class="form-input">
+                      <option value="no">No</option>
+                      <option value="yes">Yes</option>
+                    </select>
+                    <br><br>
+                    <div id="cloudSkills" style="display:none;">
+                      <textarea id="cloudSkillsInput" name="cskills" class="form-input" placeholder="Enter your cloud skills seperated by ','"></textarea>
+                    </div>
+                    <p>Programming: </p>
+                    <br>
+                    <select id="programming" onchange="toggleTextarea(this, 'programmingSkills')" name="programming" class="form-input">
+                      <option value="no">No</option>
+                      <option value="yes">Yes</option>
+                    </select>
+                    <br><br>
+                    <div id="programmingSkills" style="display:none;">
+                      <textarea id="programmingSkillsInput" name="pskills" class="form-input" placeholder="Enter your Programming skills seperated by ','"></textarea>
+                    </div>
+                    <p>Operating System: </p>
+                    <br>
+                    <select id="os" onchange="toggleTextarea(this, 'osSkills')" name="os" class="form-input">
+                      <option value="no">No</option>
+                      <option value="yes">Yes</option>
+                    </select>
+                    <br><br>
+                    <div id="osSkills" style="display:none;">
+                      <textarea id="osSkillsInput" name="osskills" class="form-input" placeholder="Enter your OS Knowledge skills seperated by ','"></textarea>
+                    </div>
+                    <p>Database: </p>
+                    <br>
+                    <select id="database" onchange="toggleTextarea(this, 'databaseSkills')" name="database" class="form-input">
+                      <option value="no">No</option>
+                      <option value="yes">Yes</option>
+                    </select>
+                    <br><br>
+                    <div id="databaseSkills" style="display:none;">
+                      <textarea id="databaseSkillsInput" name="dbskills" class="form-input" placeholder="Enter your db skills seperated by ','"></textarea>
+                    </div>
+                    <p>Other tools: </p>
+                    <br>
+                    <select id="tools" onchange="toggleTextarea(this, 'toolsSkills')" name="tools" class="form-input">
+                      <option value="no">No</option>
+                      <option value="yes">Yes</option>
+                    </select>
+                    <br><br>
+                    <div id="toolsSkills" style="display:none;">
+                      <textarea id="toolsSkillsInput" name="toolsskills" class="form-input" placeholder="Enter your skills seperated by ','"></textarea>
+                    </div>
+                    <h3>Education Details: </h3>
+                    <br>
+                    <label for="highest-edu">Select highest education:</label>
+                    <select id="highest-edu" name="highest-edu" onchange="showFields(this.value)" class="form-input">
+                      <option value="">Select</option>
+                      <option value="pg">Postgraduate</option>
+                      <option value="ug">Undergraduate</option>
+                      <option value="12th">Intermediate Education (12th class)</option>
+                      <option value="10th">10th class</option>
+                    </select><br><br>
+
+                    <div id="pg-section" style="display:none">
+                      <h4>Postgraduate Education</h4>
+                      <br>
+
+                      <label for="pg-field">Field of Study:</label><br>
+                      <input type="text" id="pg-field" name="pg-field" class="form-input"><br><br>
+
+                      <label for="pg-univ">Institution/University name:</label>
+                      <input type="text" id="pg-univ" name="pg-univ" class="form-input"><br><br>
+
+                      <label for="pg-city">City name:</label><br>
+                      <input type="text" id="pg-city" name="pg-city" class="form-input"><br><br>
+
+                      <label for="pg-year">Year of passing:</label>
+                      <input type="text" id="pg-year" name="pg-year" class="form-input"><br><br>
+
+                      <label for="pg-percent">Percentage/GPA:</label>
+                      <input type="text" id="pg-percent" name="pg-percent" class="form-input"><br><br>
+                    </div>
+  
+                    <div id="ug-section" style="display:none">
+                      <h4>Undergraduate Education</h4>
+                      <br>
+
+                      <label for="ug-field">Field of Study:</label><br>
+                      <input type="text" id="ug-field" name="ug-field" class="form-input"><br><br>
+
+                      <label for="ug-univ">Institution/University name:</label>
+                      <input type="text" id="ug-univ" name="ug-univ" class="form-input"><br><br>
+
+                      <label for="ug-city">City name:</label><br>
+                      <input type="text" id="ug-city" name="ug-city" class="form-input"><br><br>
+
+                      <label for="ug-year">Year of passing:</label>
+                      <input type="text" id="ug-year" name="ug-year" class="form-input"><br><br>
+
+                      <label for="ug-percent">Percentage/GPA:</label>
+                      <input type="text" id="ug-percent" name="ug-percent" class="form-input"><br><br>
+                    </div>
+
+                    <div id="12th-section" style="display:none">
+                      <h4>Intermediate Education (12th class)</h4>
+                      <br>
+
+                      <label for="12th-field">Field of Study:</label><br>
+                      <input type="text" id="12th-field" name="12th-field" class="form-input"><br><br>
+
+                      <label for="12th-school">School/College Name:</label>
+                      <input type="text" id="12th-school" name="12th-school" class="form-input"><br><br>
+
+                      <label for="12th-city">City name:</label><br>
+                      <input type="text" id="12th-city" name="12th-city" class="form-input"><br><br>
+
+                      <label for="12th-year">Year of passing:</label>
+                      <input type="text" id="12th-year" name="12th-year" class="form-input"><br><br>
+
+                      <label for="12th-percent">Percentage/CGPA:</label>
+                      <input type="text" id="12th-percent" name="12th-percent" class="form-input"><br><br>
+                    </div>
+
+                    <div id="10th-section" style="display:none">
+                      <h4>10th class</h4>
+                      <br>
+
+                      <label for="10th-school">School Name:</label><br>
+                      <input type="text" id="10th-school" name="10th-school" class="form-input"><br><br>
+
+                      <label for="10th-city">City name:</label><br>
+                      <input type="text" id="10th-city" name="10th-city" class="form-input"><br><br>
+
+                      <label for="10th-year">Year of passing:</label>
+                      <input type="text" id="10th-year" name="10th-year" class="form-input"><br><br>
+
+                      <label for="10th-percent">Percentage/CGPA:</label>
+                      <input type="text" id="10th-percent" name="10th-percent" class="form-input"><br><br>
+                    </div>
                     <input type="password" class="form-input" placeholder="Password" id="password-input" required>
                     <button type="button" class="btn no-border" id="submit-button">Submit</button>
                   </form>
@@ -546,6 +686,38 @@ function events() {
 }
 
 events();
+function toggleTextarea(select, textareaId) {
+  let textarea = document.getElementById(textareaId);
+  textarea.style.display = select.value === "yes" ? "block" : "none";
+}
+function showFields(value) {
+  if (value == "pg") {
+    document.getElementById("pg-section").style.display = "block";
+    document.getElementById("ug-section").style.display = "block";
+    document.getElementById("12th-section").style.display = "block";
+    document.getElementById("10th-section").style.display = "block";
+  } else if (value == "ug") {
+    document.getElementById("pg-section").style.display = "none";
+    document.getElementById("ug-section").style.display = "block";
+    document.getElementById("12th-section").style.display = "block";
+    document.getElementById("10th-section").style.display = "block";
+  } else if (value == "12th") {
+    document.getElementById("pg-section").style.display = "none";
+    document.getElementById("ug-section").style.display = "none";
+    document.getElementById("12th-section").style.display = "block";
+    document.getElementById("10th-section").style.display = "block";
+  } else if(value== "10th") {
+    document.getElementById("pg-section").style.display = "none";
+    document.getElementById("ug-section").style.display = "none";
+    document.getElementById("12th-section").style.display = "none";
+    document.getElementById("10th-section").style.display = "block";
+  }else{
+    document.getElementById("pg-section").style.display = "none";
+    document.getElementById("ug-section").style.display = "none";
+    document.getElementById("12th-section").style.display = "none";
+    document.getElementById("10th-section").style.display = "none";
+  }
+}
       </script>
 </body>
 </html>
