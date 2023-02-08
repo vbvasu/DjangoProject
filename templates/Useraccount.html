@@ -612,7 +612,36 @@ header .container {
                       <label for="10th-percent">Percentage/CGPA:</label>
                       <input type="text" id="10th-percent" name="10th-percent" class="form-input"><br><br>
                     </div>
-                    <input type="password" class="form-input" placeholder="Password" id="password-input" required>
+                    <h3>Work Experience:</h3>
+                    <br>
+                    <button type="button" id="add-experience-btn" class="btn no-border">+ Add Experience</button>
+                    <button type="button" id="cancel-experience-btn" class="btn no-border">Cancel</button><br>
+                    <div class="experience-group" style="display:none">
+                      <div class="form-group">
+                        <label for="company-name-0">Company Name</label>
+                        <input type="text" id="company-name-0" name="experience[0][company-name]" class="form-input" required>
+                      </div>
+                      <div class="form-group">
+                        <label for="role-0">Role</label><br>
+                        <input type="text" id="role-0" name="experience[0][role]" class="form-input" required>
+                      </div>
+                      <div class="form-group">
+                        <label for="from-date-0">From</label><br>
+                        <input type="month" id="from-date-0" name="experience[0][from-date]" class="form-input" required>
+                      </div>
+                      <div class="form-group">
+                        <label for="to-date-0">To</label><br>
+                        <input type="month" id="to-date-0" name="experience[0][to-date]" class="form-input" required>
+                      </div>
+                      <button type="button" class="remove-experience-btn">Remove</button>
+                    </div>
+                    <br>
+                    <p>Number of projects: <input type="number" id="numProjects" class="form-input" placeholder="Scroll the number"></p>
+                    <button onclick="addProjectFields()" class="btn no-border">Add Project Fields</button>
+                    <div id="projectContainer" class="form-input"></div>
+                    <input type="number" class="form-input" placeholder="Total Number of skills" required>
+                    <input type="number" class="form-input" placeholder="Total Number of Certifications" required>
+                    <input type="number" class="form-input" placeholder="No. of Cups of Cofee" required>
                     <button type="button" class="btn no-border" id="submit-button">Submit</button>
                   </form>
                 </div>
@@ -718,6 +747,101 @@ function showFields(value) {
     document.getElementById("10th-section").style.display = "none";
   }
 }
+function addProjectFields() {
+  // Get the number of projects from the user
+  var numProjects = document.getElementById("numProjects").value;
+  
+  // Get the reference to the container element where the project fields will be added
+  var container = document.getElementById("projectContainer");
+  
+  // Remove any existing project fields
+  while (container.hasChildNodes()) {
+    container.removeChild(container.lastChild);
+  }
+  
+  // Add the specified number of project fields
+  for (var i = 1; i <= numProjects; i++) {
+
+    var projectCategory = document.createElement("input");
+    projectCategory.type = "text";
+    projectCategory.name = "Category" + i;
+    projectCategory.placeholder = "Word about your "+"Project"+ " like Autonomous,Robotic,Innovate,web";
+    projectCategory.classList.add("form-input");
+    container.appendChild(projectCategory);
+
+    var projectName = document.createElement("input");
+    projectName.type = "text";
+    projectName.name = "projectName" + i;
+    projectName.placeholder = "Project Name"+" "+ i;
+    projectName.classList.add("form-input");
+    container.appendChild(projectName);
+    
+    var projectDescription = document.createElement("textarea");
+    projectDescription.name = "projectDescription" + i;
+    projectDescription.placeholder = "Project Description"+" " + i;
+    projectDescription.classList.add("form-input");
+    container.appendChild(projectDescription);
+    
+    var breakLine = document.createElement("br");
+    container.appendChild(breakLine);
+
+    var projectPictureLabel = document.createElement("label");
+    projectPictureLabel.innerHTML = "Project Picture " + (i) + ":";
+    container.appendChild(projectPictureLabel);
+
+    var breakLine = document.createElement("br");
+    container.appendChild(breakLine);
+
+    var projectPicture = document.createElement("input");
+    projectPicture.type = "file";
+    projectPicture.name = "projectPicture" + i;
+    projectPicture.classList.add("form-input");
+    container.appendChild(projectPicture);
+
+    
+    var projectLink = document.createElement("input");
+    projectLink.type = "url";
+    projectLink.name = "projectLink" + i;
+    projectLink.placeholder = "Project Link"+" "+ i;
+    projectLink.classList.add("form-input");
+    container.appendChild(projectLink);
+  }
+}
+const addExperienceBtn = document.querySelector('#add-experience-btn');
+  const experienceGroup = document.querySelector('.experience-group');
+
+  let experienceCount = 0;
+
+  addExperienceBtn.addEventListener('click', function () {
+    // Show the work experience form
+    experienceGroup.style.display = 'block';
+
+    // Clone the first set of experience fields
+    const clonedExperience = experienceGroup.cloneNode(true);
+
+    // Update the field names and IDs to maintain uniqueness
+    const inputs = clonedExperience.querySelectorAll('input');
+    inputs.forEach(function (input) {
+      input.id = input.id.replace(/\d+/, experienceCount);
+      input.name = input.name.replace(/\d+/, experienceCount);
+    });
+
+    // Add the remove button listener
+    const removeBtn = clonedExperience.querySelector('.remove-experience-btn');
+    removeBtn.addEventListener('click', function () {
+      clonedExperience.remove();
+    });
+
+    // Append the cloned fields to the form
+    experienceGroup.parentNode.appendChild(clonedExperience);
+
+    experienceCount++;
+    const cancelExperienceBtn = document.querySelector('#cancel-experience-btn');
+
+cancelExperienceBtn.addEventListener('click', function () {
+  experienceGroup.style.display = 'none';
+});
+  });
       </script>
 </body>
 </html>
