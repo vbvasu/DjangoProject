@@ -464,15 +464,15 @@ header .container {
                   Fill the below details to genrate your own Profile Page 
                 </p>
                 <div class="form-container">
-                  <form>
+                  <form action="/Accounts/UserForm" method="post">
                     {% csrf_token %}
-                    <input type="text" class="form-input" placeholder="Country" id="Country-input" required>
-                    <input type="text" class="form-input" placeholder="Profession" id="Profession-input" required>
-                    <textarea name="Description" class="form-input" required >Description  About You @3-4 lines</textarea>
-                    <input type="url"  class="form-input" placeholder="GitHub Link" id="GitHub-input">
-                    <input type="url"  class="form-input" placeholder="LinkedIn Link" id="LinkedIn-input">
-                    <input type="url"  class="form-input" placeholder="Instagram Link" id="Instagram-input">
-                    <input type="tel"  class="form-input" placeholder="Phone No." id="Phone-input" required>
+                    <input type="text" class="form-input" placeholder="Country" id="Country-input" name="country" required>
+                    <input type="text" class="form-input" placeholder="Profession" id="Profession-input" name="profession" required>
+                    <textarea name="Description" class="form-input" name="about" required >Description  About You @3-4 lines</textarea>
+                    <input type="url"  class="form-input" placeholder="GitHub Link" id="GitHub-input" name="gitlink">
+                    <input type="url"  class="form-input" placeholder="LinkedIn Link" id="LinkedIn-input" name="linkedin">
+                    <input type="url"  class="form-input" placeholder="Instagram Link" id="Instagram-input" name="instalink">
+                    <input type="tel"  class="form-input" placeholder="Phone No." id="Phone-input" name="phno" required>
                     <h3>Skills: </h3>
                     <br>
                     <p>Cloud: </p>
@@ -614,40 +614,54 @@ header .container {
                     </div>
                     <h3>Work Experience:</h3>
                     <br>
-                    <button type="button" id="add-experience-btn" class="btn no-border">+ Add Experience</button>
-                    <button type="button" id="cancel-experience-btn" class="btn no-border">Cancel</button><br>
-                    <div class="experience-group" style="display:none">
-                      <div class="form-group">
-                        <label for="company-name-0">Company Name</label>
-                        <input type="text" id="company-name-0" name="experience[0][company-name]" class="form-input" required>
+                    <div id="experienceContainer">
+                      <div class="experience-group" style="display:none">
+                        <div class="form-group">
+                          <label for="companyName0">Company Name</label>
+                          <input type="text" id="companyName0" name="experience[0][companyName]" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                          <label for="role0">Role</label><br>
+                          <input type="text" id="role0" name="experience[0][role]" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                          <label for="fromDate0">From</label><br>
+                          <input type="month" id="fromDate0" name="experience[0][fromDate]" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                          <label for="toDate0">To</label><br>
+                          <input type="month" id="toDate0" name="experience[0][toDate]" class="form-input" required>
+                        </div>
+                        <button type="button" class="remove-experience-btn" class="btn no-border">Remove</button>
                       </div>
-                      <div class="form-group">
-                        <label for="role-0">Role</label><br>
-                        <input type="text" id="role-0" name="experience[0][role]" class="form-input" required>
-                      </div>
-                      <div class="form-group">
-                        <label for="from-date-0">From</label><br>
-                        <input type="month" id="from-date-0" name="experience[0][from-date]" class="form-input" required>
-                      </div>
-                      <div class="form-group">
-                        <label for="to-date-0">To</label><br>
-                        <input type="month" id="to-date-0" name="experience[0][to-date]" class="form-input" required>
-                      </div>
-                      <button type="button" class="remove-experience-btn">Remove</button>
                     </div>
+                    <br>
+                    <button onclick="addExperienceFields()" class="btn no-border">Add Experience</button>
                     <br>
                     <p>Number of projects: <input type="number" id="numProjects" class="form-input" placeholder="Scroll the number"></p>
                     <button onclick="addProjectFields()" class="btn no-border">Add Project Fields</button>
                     <div id="projectContainer" class="form-input"></div>
-                    <input type="number" class="form-input" placeholder="Total Number of skills" required>
-                    <input type="number" class="form-input" placeholder="Total Number of Certifications" required>
-                    <input type="number" class="form-input" placeholder="No. of Cups of Cofee" required>
+                    <input type="number" class="form-input" placeholder="Total Number of skills" name="skillsno" required>
+                    <input type="number" class="form-input" placeholder="Total Number of Certifications" name="certificationno" required>
+                    <input type="number" class="form-input" placeholder="No. of Cups of Cofee" name="cofee" required>
+                    <br>
+                    <label for="Resume">Upload your Resume</label>
+                    <input type="file" class="form-input" name="Resume" required>
                     <button type="button" class="btn no-border" id="submit-button">Submit</button>
                   </form>
                 </div>
               </div>
   
               <div class="right">
+                <label for="Profilepic">Upload your Profile Picture: </label>
+                <input type="file" class="form-input" name="Profilepic" required>
+                <br>
+                <label for="logopic">Upload your Logo Picture:</label>
+                <input type="file" class="form-input" name="logopic" required>
+                <br>
+                <label for="backpic">Upload your Background Picture:</label>
+                <input type="file" class="form-input" name="backpic" required>
+                <br>
                 <img src="{% static 'Persona.png' %}" alt="Person Image" class="person" />
               </div>
             </div>
@@ -762,6 +776,13 @@ function addProjectFields() {
   // Add the specified number of project fields
   for (var i = 1; i <= numProjects; i++) {
 
+    var projectHeading = document.createElement("h4");
+    projectHeading.innerHTML = "Project " + i +":";
+    container.appendChild(projectHeading);
+
+    var breakLine = document.createElement("br");
+    container.appendChild(breakLine);
+
     var projectCategory = document.createElement("input");
     projectCategory.type = "text";
     projectCategory.name = "Category" + i;
@@ -805,43 +826,32 @@ function addProjectFields() {
     projectLink.placeholder = "Project Link"+" "+ i;
     projectLink.classList.add("form-input");
     container.appendChild(projectLink);
+
+    var breakLine = document.createElement("br");
+    container.appendChild(breakLine);
   }
 }
-const addExperienceBtn = document.querySelector('#add-experience-btn');
-  const experienceGroup = document.querySelector('.experience-group');
+let experienceCounter = 1;
 
-  let experienceCount = 0;
-
-  addExperienceBtn.addEventListener('click', function () {
-    // Show the work experience form
-    experienceGroup.style.display = 'block';
-
-    // Clone the first set of experience fields
-    const clonedExperience = experienceGroup.cloneNode(true);
-
-    // Update the field names and IDs to maintain uniqueness
-    const inputs = clonedExperience.querySelectorAll('input');
-    inputs.forEach(function (input) {
-      input.id = input.id.replace(/\d+/, experienceCount);
-      input.name = input.name.replace(/\d+/, experienceCount);
-    });
-
-    // Add the remove button listener
-    const removeBtn = clonedExperience.querySelector('.remove-experience-btn');
-    removeBtn.addEventListener('click', function () {
-      clonedExperience.remove();
-    });
-
-    // Append the cloned fields to the form
-    experienceGroup.parentNode.appendChild(clonedExperience);
-
-    experienceCount++;
-    const cancelExperienceBtn = document.querySelector('#cancel-experience-btn');
-
-cancelExperienceBtn.addEventListener('click', function () {
-  experienceGroup.style.display = 'none';
-});
+const addExperienceFields = () => {
+  const experienceGroup = document.querySelector(".experience-group").cloneNode(true);
+  experienceGroup.style.display = "block";
+  experienceGroup.querySelectorAll("input").forEach((input) => {
+    input.id = input.id.replace("0", experienceCounter);
+    input.name = input.name.replace("0", experienceCounter);
   });
+  experienceGroup.querySelectorAll("label").forEach((label) => {
+    label.setAttribute("for", label.getAttribute("for").replace("0", experienceCounter));
+  });
+  experienceGroup.querySelector(".remove-experience-btn").addEventListener("click", () => {
+    experienceGroup.remove();
+  });
+  document.querySelector("#experienceContainer").appendChild(experienceGroup);
+  experienceCounter++;
+};
+
+document.querySelector("#add-experience-btn").addEventListener("click", addExperienceFields);
+
       </script>
 </body>
 </html>

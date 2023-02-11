@@ -2,6 +2,8 @@ from django.shortcuts import render,redirect
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from Accounts.models import Skill, UserProfile
 
 # Create your views here.
 def register(request):
@@ -51,6 +53,168 @@ def signout(request):
     logout(request)
     messages.success(request,"Logged out successfully")
     return render(request,'login.html')
+
+@login_required
+def UserDetails(request):
+    if request.method == 'POST':
+        country = request.POST['country']
+        profession = request.POST['profession']
+        about = request.POST['about']
+        gitlink = request.POST['gitlink']
+        linkedin = request.POST['linkedin']
+        insta = request.POST['instalink']
+        phno  = request.POST['phno']
+        cloud = request.POST['cloud']
+        cloud_skills = request.POST['cskills']
+        programming = request.POST['programming']
+        programming_skills = request.POST['pskills']
+        os = request.POST['os']
+        os_skills = request.POST['osskills']
+        database = request.POST['database']
+        database_skills = request.POST['dbskills']
+        tools = request.POST['tools']
+        tools_skills = request.POST['toolsskills']
+        highest_edu = request.POST['highest-edu']
+        if highest_edu == 'pg':
+            pg_field = request.POST['pg-field']
+            pg_univ = request.POST['pg-univ']
+            pg_city = request.POST['pg-city']
+            pg_year = request.POST['pg-year']
+            pg_percent = request.POST['pg-percent']
+
+            ug_field = request.POST['ug-field']
+            ug_univ = request.POST['ug-univ']
+            ug_city = request.POST['ug-city']
+            ug_year = request.POST['ug-year']
+            ug_percent = request.POST['ug-percent']
+
+            tlv_field = request.POST['12th-field']
+            tlv_univ = request.POST['12th-univ']
+            tlv_city = request.POST['12th-city']
+            tlv_year = request.POST['12th-year']
+            tlv_percent = request.POST['12th-percent']
+
+            ten_field = request.POST['10th-field']
+            ten_univ = request.POST['10th-univ']
+            ten_city = request.POST['10th-city']
+            ten_year = request.POST['10th-year']
+            ten_percent = request.POST['10th-percent']
+
+        elif highest_edu == 'ug':
+            # Retrieve data for Undergraduate education
+            ug_field = request.POST['ug-field']
+            ug_univ = request.POST['ug-univ']
+            ug_city = request.POST['ug-city']
+            ug_year = request.POST['ug-year']
+            ug_percent = request.POST['ug-percent']
+
+            tlv_field = request.POST['12th-field']
+            tlv_univ = request.POST['12th-univ']
+            tlv_city = request.POST['12th-city']
+            tlv_year = request.POST['12th-year']
+            tlv_percent = request.POST['12th-percent']
+
+            ten_field = request.POST['10th-field']
+            ten_univ = request.POST['10th-univ']
+            ten_city = request.POST['10th-city']
+            ten_year = request.POST['10th-year']
+            ten_percent = request.POST['10th-percent']
+
+        elif highest_edu == '12th':
+            # Retrieve data for Intermediate education
+            tlv_field = request.POST['12th-field']
+            tlv_univ = request.POST['12th-univ']
+            tlv_city = request.POST['12th-city']
+            tlv_year = request.POST['12th-year']
+            tlv_percent = request.POST['12th-percent']
+
+            ten_field = request.POST['10th-field']
+            ten_univ = request.POST['10th-univ']
+            ten_city = request.POST['10th-city']
+            ten_year = request.POST['10th-year']
+            ten_percent = request.POST['10th-percent']
+
+        elif highest_edu == '10th':
+            # Retrieve data for 10th class education
+            ten_field = request.POST['10th-field']
+            ten_univ = request.POST['10th-univ']
+            ten_city = request.POST['10th-city']
+            ten_year = request.POST['10th-year']
+            ten_percent = request.POST['10th-percent']
+           
+        else:   
+            pass
+
+        experience = request.POST.getlist('experience')
+        for i in range(len(experience)):
+            company_name = request.POST.get(f'experience[{i}][companyName]')
+            role = request.POST.get(f'experience[{i}][role]')
+            from_date = request.POST.get(f'experience[{i}][fromDate]')
+            to_date = request.POST.get(f'experience[{i}][toDate]')
+        
+        num_projects = int(request.POST.get("numProjects"))
+        for i in range(num_projects):
+            project_name = request.POST.get("projectName" + str(i))
+            project_description = request.POST.get("projectDescription" + str(i))
+            project_picture = request.FILES.get("projectPicture" + str(i))
+            project_link = request.POST.get("projectLink" + str(i))
+        cofee = request.POST['cofee']
+        certificationno = request.POST['certificationno']
+        skillsno = request.POST['skillsno']
+        Resume = request.FILES['Resume']
+        profilepic = request.FILES['Profilepic']
+        logopic = request.FILES['logopic']
+        backpic = request.FILES['backpic']
+        user_profile = UserProfile.objects.create(
+            user=request.user,
+            Country= country,
+            Profession= profession,
+            Description= about,
+            Github_link= gitlink,
+            Linkedin_link=linkedin,
+            Instagram_link=insta,
+            Phone_number=phno,
+        )
+        if cloud == 'yes':
+            for skill in cloud_skills.split(','):
+                Skill.objects.create(
+                    user=request.user,
+                    skill_type='cloud',
+                    skill_name=skill.strip()
+                )
+        if programming == 'yes':
+            for skill in programming_skills.split(','):
+                Skill.objects.create(
+                    user=request.user,
+                    skill_type='programming',
+                    skill_name=skill.strip()
+                )
+        if os == 'yes':
+            for skill in os_skills.split(','):
+                Skill.objects.create(
+                    user=request.user,
+                    skill_type='os',
+                    skill_name=skill.strip()
+                )
+        if database == 'yes':
+            for skill in database_skills.split(','):
+                Skill.objects.create(
+                    user=request.user,
+                    skill_type='database',
+                    skill_name=skill.strip()
+                )
+        if tools == 'yes':
+            for skill in tools_skills.split(','):
+                Skill.objects.create(
+                    user=request.user,
+                    skill_type='tools',
+                    skill_name=skill.strip()
+                )
+        
+                
+
+            
+           
     
 
    

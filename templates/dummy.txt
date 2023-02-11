@@ -1,9 +1,23 @@
-from django.db import models
-from django.contrib.auth.models import User
+def view_user_profile(request, username):
+    user = User.objects.get(username=username)
+    user_profile = UserProfile.objects.get(user=user)
+    skills = Skill.objects.filter(user=user)
 
-class UserProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    college_name = models.CharField(max_length=100)
-    document_1 = models.FileField(upload_to='documents/')
-    document_2 = models.FileField(upload_to='documents/')
+    context = {
+        'user': user,
+        'user_profile': user_profile,
+        'skills': skills,
+    }
 
+    return render(request, 'template.html', context)
+<h1>{{ user.username }}'s Profile</h1>
+<p>{{ user_profile.Description }}</p>
+
+<h2>Skills:</h2>
+{% for skill in skills %}
+    <p>{{ skill.skill_name }} ({{ skill.skill_type }})</p>
+{% endfor %}
+
+{% for skill in user.skill_set.filter(skill_type='cloud') %}
+    <p>{{ skill.skill_name }} ({{ skill.skill_type }})</p>
+{% endfor %}
