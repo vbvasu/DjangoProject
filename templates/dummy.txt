@@ -21,3 +21,106 @@ def view_user_profile(request, username):
 {% for skill in user.skill_set.filter(skill_type='cloud') %}
     <p>{{ skill.skill_name }} ({{ skill.skill_type }})</p>
 {% endfor %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h3>Work Experience:</h3>
+                    <br>
+                    <div id="experienceContainer">
+                      <div class="experience-group" style="display:none">
+                        <div class="form-group">
+                          <label for="companyName0">Company Name</label>
+                          <input type="text" id="companyName0" name="experience[0][companyName]" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                          <label for="role0">Role</label><br>
+                          <input type="text" id="role0" name="experience[0][role]" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                          <label for="fromDate0">From</label><br>
+                          <input type="month" id="fromDate0" name="experience[0][fromDate]" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                          <label for="toDate0">To</label><br>
+                          <input type="month" id="toDate0" name="experience[0][toDate]" class="form-input" required>
+                        </div>
+                        <button type="button" class="remove-experience-btn" class="btn no-border">Remove</button>
+                      </div>
+                    </div>
+                    <br>
+                    <button onclick="addExperienceFields()" class="btn no-border">Add Experience</button>
+                    <br>
+
+
+        experience = request.POST.getlist('experience')
+        for i in range(len(experience)):
+            company_name = request.POST.get(f'experience[{i}][companyName]')
+            role = request.POST.get(f'experience[{i}][role]')
+            from_date = request.POST.get(f'experience[{i}][fromDate]')
+            to_date = request.POST.get(f'experience[{i}][toDate]')
+
+let experienceCounter = 1;
+
+const addExperienceFields = () => {
+  const experienceGroup = document.querySelector(".experience-group").cloneNode(true);
+  experienceGroup.style.display = "block";
+  experienceGroup.querySelectorAll("input").forEach((input) => {
+    input.id = input.id.replace("0", experienceCounter);
+    input.name = input.name.replace("0", experienceCounter);
+  });
+  experienceGroup.querySelectorAll("label").forEach((label) => {
+    label.setAttribute("for", label.getAttribute("for").replace("0", experienceCounter));
+  });
+  experienceGroup.querySelector(".remove-experience-btn").addEventListener("click", () => {
+    experienceGroup.remove();
+  });
+  document.querySelector("#experienceContainer").appendChild(experienceGroup);
+  experienceCounter++;
+};
+
+document.querySelector("#add-experience-btn").addEventListener("click", addExperienceFields);

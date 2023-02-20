@@ -468,7 +468,7 @@ header .container {
                     {% csrf_token %}
                     <input type="text" class="form-input" placeholder="Country" id="Country-input" name="country" required>
                     <input type="text" class="form-input" placeholder="Profession" id="Profession-input" name="profession" required>
-                    <textarea name="Description" class="form-input" name="about" required >Description  About You @3-4 lines</textarea>
+                    <textarea class="form-input" name="about" required >Description  About You @3-4 lines</textarea>
                     <input type="url"  class="form-input" placeholder="GitHub Link" id="GitHub-input" name="gitlink">
                     <input type="url"  class="form-input" placeholder="LinkedIn Link" id="LinkedIn-input" name="linkedin">
                     <input type="url"  class="form-input" placeholder="Instagram Link" id="Instagram-input" name="instalink">
@@ -612,32 +612,6 @@ header .container {
                       <label for="10th-percent">Percentage/CGPA:</label>
                       <input type="text" id="10th-percent" name="10th-percent" class="form-input"><br><br>
                     </div>
-                    <h3>Work Experience:</h3>
-                    <br>
-                    <div id="experienceContainer">
-                      <div class="experience-group" style="display:none">
-                        <div class="form-group">
-                          <label for="companyName0">Company Name</label>
-                          <input type="text" id="companyName0" name="experience[0][companyName]" class="form-input" required>
-                        </div>
-                        <div class="form-group">
-                          <label for="role0">Role</label><br>
-                          <input type="text" id="role0" name="experience[0][role]" class="form-input" required>
-                        </div>
-                        <div class="form-group">
-                          <label for="fromDate0">From</label><br>
-                          <input type="month" id="fromDate0" name="experience[0][fromDate]" class="form-input" required>
-                        </div>
-                        <div class="form-group">
-                          <label for="toDate0">To</label><br>
-                          <input type="month" id="toDate0" name="experience[0][toDate]" class="form-input" required>
-                        </div>
-                        <button type="button" class="remove-experience-btn" class="btn no-border">Remove</button>
-                      </div>
-                    </div>
-                    <br>
-                    <button onclick="addExperienceFields()" class="btn no-border">Add Experience</button>
-                    <br>
                     <p>Number of projects: <input type="number" id="numProjects" class="form-input" placeholder="Scroll the number"></p>
                     <button onclick="addProjectFields()" class="btn no-border">Add Project Fields</button>
                     <div id="projectContainer" class="form-input"></div>
@@ -647,7 +621,7 @@ header .container {
                     <br>
                     <label for="Resume">Upload your Resume</label>
                     <input type="file" class="form-input" name="Resume" required>
-                    <button type="button" class="btn no-border" id="submit-button">Submit</button>
+                    <button type="submit" class="btn no-border" id="submit-button">Submit</button>
                   </form>
                 </div>
               </div>
@@ -831,27 +805,6 @@ function addProjectFields() {
     container.appendChild(breakLine);
   }
 }
-let experienceCounter = 1;
-
-const addExperienceFields = () => {
-  const experienceGroup = document.querySelector(".experience-group").cloneNode(true);
-  experienceGroup.style.display = "block";
-  experienceGroup.querySelectorAll("input").forEach((input) => {
-    input.id = input.id.replace("0", experienceCounter);
-    input.name = input.name.replace("0", experienceCounter);
-  });
-  experienceGroup.querySelectorAll("label").forEach((label) => {
-    label.setAttribute("for", label.getAttribute("for").replace("0", experienceCounter));
-  });
-  experienceGroup.querySelector(".remove-experience-btn").addEventListener("click", () => {
-    experienceGroup.remove();
-  });
-  document.querySelector("#experienceContainer").appendChild(experienceGroup);
-  experienceCounter++;
-};
-
-document.querySelector("#add-experience-btn").addEventListener("click", addExperienceFields);
-
       </script>
 </body>
 </html>

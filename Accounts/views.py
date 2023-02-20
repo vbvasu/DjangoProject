@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from Accounts.models import Skill, UserProfile
+from Accounts.models import Skill, UserProfile, Project
 
 # Create your views here.
 def register(request):
@@ -89,13 +89,12 @@ def UserDetails(request):
             ug_percent = request.POST['ug-percent']
 
             tlv_field = request.POST['12th-field']
-            tlv_univ = request.POST['12th-univ']
+            tlv_univ = request.POST['12th-school']
             tlv_city = request.POST['12th-city']
             tlv_year = request.POST['12th-year']
             tlv_percent = request.POST['12th-percent']
 
-            ten_field = request.POST['10th-field']
-            ten_univ = request.POST['10th-univ']
+            ten_univ = request.POST['10th-school']
             ten_city = request.POST['10th-city']
             ten_year = request.POST['10th-year']
             ten_percent = request.POST['10th-percent']
@@ -109,13 +108,12 @@ def UserDetails(request):
             ug_percent = request.POST['ug-percent']
 
             tlv_field = request.POST['12th-field']
-            tlv_univ = request.POST['12th-univ']
+            tlv_univ = request.POST['12th-school']
             tlv_city = request.POST['12th-city']
             tlv_year = request.POST['12th-year']
             tlv_percent = request.POST['12th-percent']
 
-            ten_field = request.POST['10th-field']
-            ten_univ = request.POST['10th-univ']
+            ten_univ = request.POST['10th-school']
             ten_city = request.POST['10th-city']
             ten_year = request.POST['10th-year']
             ten_percent = request.POST['10th-percent']
@@ -123,41 +121,39 @@ def UserDetails(request):
         elif highest_edu == '12th':
             # Retrieve data for Intermediate education
             tlv_field = request.POST['12th-field']
-            tlv_univ = request.POST['12th-univ']
+            tlv_univ = request.POST['12th-school']
             tlv_city = request.POST['12th-city']
             tlv_year = request.POST['12th-year']
             tlv_percent = request.POST['12th-percent']
 
-            ten_field = request.POST['10th-field']
-            ten_univ = request.POST['10th-univ']
+            ten_univ = request.POST['10th-school']
             ten_city = request.POST['10th-city']
             ten_year = request.POST['10th-year']
             ten_percent = request.POST['10th-percent']
 
         elif highest_edu == '10th':
             # Retrieve data for 10th class education
-            ten_field = request.POST['10th-field']
-            ten_univ = request.POST['10th-univ']
+            ten_univ = request.POST['10th-school']
             ten_city = request.POST['10th-city']
             ten_year = request.POST['10th-year']
             ten_percent = request.POST['10th-percent']
            
         else:   
             pass
-
-        experience = request.POST.getlist('experience')
-        for i in range(len(experience)):
-            company_name = request.POST.get(f'experience[{i}][companyName]')
-            role = request.POST.get(f'experience[{i}][role]')
-            from_date = request.POST.get(f'experience[{i}][fromDate]')
-            to_date = request.POST.get(f'experience[{i}][toDate]')
-        
         num_projects = int(request.POST.get("numProjects"))
         for i in range(num_projects):
-            project_name = request.POST.get("projectName" + str(i))
-            project_description = request.POST.get("projectDescription" + str(i))
-            project_picture = request.FILES.get("projectPicture" + str(i))
-            project_link = request.POST.get("projectLink" + str(i))
+            project_category =  request.POST.get("Category" + str(i+1))
+            project_name = request.POST.get("projectName" + str(i+1))
+            project_description = request.POST.get("projectDescription" + str(i+1))
+            project_picture = request.FILES.get("projectPicture" + str(i+1))
+            project_link = request.POST.get("projectLink" + str(i+1))
+            project = Project.objects.create(user = request.user,
+                                         project_category=project_category,
+                                         project_name=project_name,
+                                         project_description=project_description,
+                                         project_picture=project_picture,
+                                         project_link=project_link)
+            project.save()
         cofee = request.POST['cofee']
         certificationno = request.POST['certificationno']
         skillsno = request.POST['skillsno']
@@ -174,7 +170,15 @@ def UserDetails(request):
             Linkedin_link=linkedin,
             Instagram_link=insta,
             Phone_number=phno,
+            Skill_no=skillsno,
+            Certification_no=certificationno,
+            Cofee_no=cofee,
+            Resume = Resume,
+            profile_picture = profilepic,
+            logo_picture = logopic,
+            background_picture = backpic,
         )
+        user_profile.save()
         if cloud == 'yes':
             for skill in cloud_skills.split(','):
                 Skill.objects.create(
@@ -210,6 +214,7 @@ def UserDetails(request):
                     skill_type='tools',
                     skill_name=skill.strip()
                 )
+        
         
                 
 
