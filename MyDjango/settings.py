@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     'demo',
     'Portfolio',
     'Accounts',
-    'crispy_forms',
 ]
 
 MIDDLEWARE = [

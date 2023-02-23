@@ -98,11 +98,35 @@ def UserDetails(request):
             ten_city = request.POST['10th-city']
             ten_year = request.POST['10th-year']
             ten_percent = request.POST['10th-percent']
-            edu = Education(user=request.user ,highest_edu=highest_edu, pg_field=pg_field, pg_univ=pg_univ, pg_city=pg_city, pg_year=pg_year, pg_percent=pg_percent,
+            try:
+                edu = Education.objects.get(user=request.user)
+                edu.highest_edu=highest_edu
+                edu.pg_field=pg_field 
+                edu.pg_univ=pg_univ 
+                edu.pg_city=pg_city
+                edu.pg_year=pg_year
+                edu.pg_percent=pg_percent
+                edu.ug_field=ug_field
+                edu.ug_univ=ug_univ
+                edu.ug_city=ug_city
+                edu.ug_year=ug_year
+                edu.ug_percent=ug_percent
+                edu.tlv_field=tlv_field
+                edu.tlv_univ=tlv_univ
+                edu.tlv_city=tlv_city
+                edu.tlv_year=tlv_year
+                edu.tlv_percent=tlv_percent
+                edu.ten_univ=ten_univ
+                edu.ten_city=ten_city
+                edu.ten_year=ten_year
+                edu.ten_percent=ten_percent
+                edu.save()
+            except Education.DoesNotExist:
+                edu = Education.objects.create(user=request.user ,highest_edu=highest_edu, pg_field=pg_field, pg_univ=pg_univ, pg_city=pg_city, pg_year=pg_year, pg_percent=pg_percent,
                             ug_field=ug_field,ug_univ=ug_univ,ug_city=ug_city,ug_year=ug_year,ug_percent=ug_percent,
                             tlv_field=tlv_field,tlv_univ=tlv_univ,tlv_city=tlv_city,tlv_year=tlv_year,tlv_percent=tlv_percent,
                             ten_univ=ten_univ,ten_city=ten_city,ten_year=ten_year,ten_percent=ten_percent)
-            edu.save()
+                edu.save()
 
         elif highest_edu == 'ug':
             # Retrieve data for Undergraduate education
@@ -122,10 +146,30 @@ def UserDetails(request):
             ten_city = request.POST['10th-city']
             ten_year = request.POST['10th-year']
             ten_percent = request.POST['10th-percent']
-            edu = Education(user=request.user ,ug_field=ug_field,ug_univ=ug_univ,ug_city=ug_city,ug_year=ug_year,ug_percent=ug_percent,
-                            tlv_field=tlv_field,tlv_univ=tlv_univ,tlv_city=tlv_city,tlv_year=tlv_year,tlv_percent=tlv_percent,
-                            ten_univ=ten_univ,ten_city=ten_city,ten_year=ten_year,ten_percent=ten_percent)
-            edu.save()
+            try:
+                edu = Education.objects.get(user=request.user)
+                edu.highest_edu=highest_edu
+                edu.ug_field=ug_field
+                edu.ug_univ=ug_univ
+                edu.ug_city=ug_city
+                edu.ug_year=ug_year
+                edu.ug_percent=ug_percent
+                edu.tlv_field=tlv_field
+                edu.tlv_univ=tlv_univ
+                edu.tlv_city=tlv_city
+                edu.tlv_year=tlv_year
+                edu.tlv_percent=tlv_percent
+                edu.ten_univ=ten_univ
+                edu.ten_city=ten_city
+                edu.ten_year=ten_year
+                edu.ten_percent=ten_percent
+                edu.save()
+            except Education.DoesNotExist:
+                edu = Education.objects.create(user=request.user ,highest_edu=highest_edu,
+                                               ug_field=ug_field,ug_univ=ug_univ,ug_city=ug_city,ug_year=ug_year,ug_percent=ug_percent,
+                                               tlv_field=tlv_field,tlv_univ=tlv_univ,tlv_city=tlv_city,tlv_year=tlv_year,tlv_percent=tlv_percent,
+                                               ten_univ=ten_univ,ten_city=ten_city,ten_year=ten_year,ten_percent=ten_percent)
+                edu.save()
 
         elif highest_edu == '12th':
             # Retrieve data for Intermediate education
@@ -139,9 +183,24 @@ def UserDetails(request):
             ten_city = request.POST['10th-city']
             ten_year = request.POST['10th-year']
             ten_percent = request.POST['10th-percent']
-            edu = Education(user=request.user ,tlv_field=tlv_field,tlv_univ=tlv_univ,tlv_city=tlv_city,tlv_year=tlv_year,tlv_percent=tlv_percent,
-                            ten_univ=ten_univ,ten_city=ten_city,ten_year=ten_year,ten_percent=ten_percent)
-            edu.save()
+            try:
+                edu = Education.objects.get(user=request.user)
+                edu.highest_edu=highest_edu
+                edu.tlv_field=tlv_field
+                edu.tlv_univ=tlv_univ
+                edu.tlv_city=tlv_city
+                edu.tlv_year=tlv_year
+                edu.tlv_percent=tlv_percent
+                edu.ten_univ=ten_univ
+                edu.ten_city=ten_city
+                edu.ten_year=ten_year
+                edu.ten_percent=ten_percent
+                edu.save()
+            except Education.DoesNotExist:
+                edu = Education.objects.create(user=request.user ,highest_edu=highest_edu,
+                                               tlv_field=tlv_field,tlv_univ=tlv_univ,tlv_city=tlv_city,tlv_year=tlv_year,tlv_percent=tlv_percent,
+                                               ten_univ=ten_univ,ten_city=ten_city,ten_year=ten_year,ten_percent=ten_percent)
+                edu.save()
 
 
         elif highest_edu == '10th':
@@ -150,8 +209,18 @@ def UserDetails(request):
             ten_city = request.POST['10th-city']
             ten_year = request.POST['10th-year']
             ten_percent = request.POST['10th-percent']
-            edu = Education(user=request.user ,ten_univ=ten_univ,ten_city=ten_city,ten_year=ten_year,ten_percent=ten_percent)
-            edu.save()
+            try:
+                edu = Education.objects.get(user=request.user)
+                edu.highest_edu=highest_edu
+                edu.ten_univ=ten_univ
+                edu.ten_city=ten_city
+                edu.ten_year=ten_year
+                edu.ten_percent=ten_percent
+                edu.save()
+            except Education.DoesNotExist:
+                edu = Education.objects.create(user=request.user ,highest_edu=highest_edu,
+                                               ten_univ=ten_univ,ten_city=ten_city,ten_year=ten_year,ten_percent=ten_percent)
+                edu.save()
            
         else:   
             pass
@@ -165,13 +234,22 @@ def UserDetails(request):
             project_description = request.POST.get("projectDescription" + str(i+1))
             project_picture = request.FILES.get("projectPicture" + str(i+1))
             project_link = request.POST.get("projectLink" + str(i+1))
-            project = Project.objects.create(user = request.user,
+            try:
+                project = Project.objects.get(user = request.user)
+                project.project_category=project_category
+                project.project_name=project_name
+                project.project_description=project_description
+                project.project_picture=project_picture
+                project.project_link=project_link
+                project.save()
+            except Project.DoesNotExist:
+                project = Project.objects.create(user = request.user,
                                          project_category=project_category,
                                          project_name=project_name,
                                          project_description=project_description,
                                          project_picture=project_picture,
                                          project_link=project_link)
-            project.save()
+                project.save()
         cofee = request.POST['cofee']
         certificationno = request.POST['certificationno']
         skillsno = request.POST['skillsno']
@@ -219,39 +297,66 @@ def UserDetails(request):
             user_profile.save()
         if cloud == 'yes':
             for skill in cloud_skills.split(','):
-                Skill.objects.create(
-                    user=request.user,
-                    skill_type='cloud',
-                    skill_name=skill.strip()
-                )
+                try:
+                    s=Skill.objects.get(user=request.user)
+                    s.skill_type='cloud'
+                    s.skill_name=skill.strip()
+                    s.save()
+                except Skill.DoesNotExist:
+                    Skill.objects.create(
+                        user=request.user,
+                        skill_type='cloud',
+                        skill_name=skill.strip()
+                        )
         if programming == 'yes':
             for skill in programming_skills.split(','):
-                Skill.objects.create(
-                    user=request.user,
-                    skill_type='programming',
-                    skill_name=skill.strip()
-                )
+                try:
+                    s=Skill.objects.get(user=request.user)
+                    s.skill_type='programming'
+                    s.skill_name=skill.strip()
+
+                except Skill.DoesNotExist:
+                    Skill.objects.create(
+                        user=request.user,
+                        skill_type='programming',
+                        skill_name=skill.strip()
+                        )
         if os == 'yes':
             for skill in os_skills.split(','):
-                Skill.objects.create(
-                    user=request.user,
-                    skill_type='os',
-                    skill_name=skill.strip()
-                )
+                try:
+                    s=Skill.objects.get(user=request.user)
+                    s.skill_type='os'
+                    s.skill_name=skill.strip()
+                except Skill.DoesNotExist:
+                    Skill.objects.create(
+                        user=request.user,
+                        skill_type='os',
+                        skill_name=skill.strip()
+                        )
         if database == 'yes':
             for skill in database_skills.split(','):
-                Skill.objects.create(
-                    user=request.user,
-                    skill_type='database',
-                    skill_name=skill.strip()
-                )
+                try:
+                    s=Skill.objects.get(user=request.user)
+                    s.skill_type='database'
+                    s.skill_name=skill.strip()
+                except Skill.DoesNotExist:
+                    Skill.objects.create(
+                        user=request.user,
+                        skill_type='database',
+                        skill_name=skill.strip()
+                        )
         if tools == 'yes':
             for skill in tools_skills.split(','):
-                Skill.objects.create(
-                    user=request.user,
-                    skill_type='tools',
-                    skill_name=skill.strip()
-                )
+                try:
+                    s=Skill.objects.get(user=request.user)
+                    s.skill_type='tools'
+                    s.skill_name=skill.strip()
+                except Skill.DoesNotExist:
+                    Skill.objects.create(
+                        user=request.user,
+                        skill_type='tools',
+                        skill_name=skill.strip()
+                        )
         return render(request,'demodisplay.html')
         
         
