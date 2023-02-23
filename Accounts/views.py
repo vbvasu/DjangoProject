@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from Accounts.models import Skill, UserProfile, Project
+from Accounts.models import Education, Skill, UserProfile, Project
 
 # Create your views here.
 def register(request):
@@ -98,6 +98,11 @@ def UserDetails(request):
             ten_city = request.POST['10th-city']
             ten_year = request.POST['10th-year']
             ten_percent = request.POST['10th-percent']
+            edu = Education(user=request.user ,highest_edu=highest_edu, pg_field=pg_field, pg_univ=pg_univ, pg_city=pg_city, pg_year=pg_year, pg_percent=pg_percent,
+                            ug_field=ug_field,ug_univ=ug_univ,ug_city=ug_city,ug_year=ug_year,ug_percent=ug_percent,
+                            tlv_field=tlv_field,tlv_univ=tlv_univ,tlv_city=tlv_city,tlv_year=tlv_year,tlv_percent=tlv_percent,
+                            ten_univ=ten_univ,ten_city=ten_city,ten_year=ten_year,ten_percent=ten_percent)
+            edu.save()
 
         elif highest_edu == 'ug':
             # Retrieve data for Undergraduate education
@@ -117,6 +122,10 @@ def UserDetails(request):
             ten_city = request.POST['10th-city']
             ten_year = request.POST['10th-year']
             ten_percent = request.POST['10th-percent']
+            edu = Education(user=request.user ,ug_field=ug_field,ug_univ=ug_univ,ug_city=ug_city,ug_year=ug_year,ug_percent=ug_percent,
+                            tlv_field=tlv_field,tlv_univ=tlv_univ,tlv_city=tlv_city,tlv_year=tlv_year,tlv_percent=tlv_percent,
+                            ten_univ=ten_univ,ten_city=ten_city,ten_year=ten_year,ten_percent=ten_percent)
+            edu.save()
 
         elif highest_edu == '12th':
             # Retrieve data for Intermediate education
@@ -130,6 +139,10 @@ def UserDetails(request):
             ten_city = request.POST['10th-city']
             ten_year = request.POST['10th-year']
             ten_percent = request.POST['10th-percent']
+            edu = Education(user=request.user ,tlv_field=tlv_field,tlv_univ=tlv_univ,tlv_city=tlv_city,tlv_year=tlv_year,tlv_percent=tlv_percent,
+                            ten_univ=ten_univ,ten_city=ten_city,ten_year=ten_year,ten_percent=ten_percent)
+            edu.save()
+
 
         elif highest_edu == '10th':
             # Retrieve data for 10th class education
@@ -137,10 +150,15 @@ def UserDetails(request):
             ten_city = request.POST['10th-city']
             ten_year = request.POST['10th-year']
             ten_percent = request.POST['10th-percent']
+            edu = Education(user=request.user ,ten_univ=ten_univ,ten_city=ten_city,ten_year=ten_year,ten_percent=ten_percent)
+            edu.save()
            
         else:   
             pass
-        num_projects = int(request.POST.get("numProjects"))
+        num_projects = 0
+        for key in request.POST:
+            if key.startswith('Category'):
+                num_projects += 1
         for i in range(num_projects):
             project_category =  request.POST.get("Category" + str(i+1))
             project_name = request.POST.get("projectName" + str(i+1))
@@ -157,11 +175,31 @@ def UserDetails(request):
         cofee = request.POST['cofee']
         certificationno = request.POST['certificationno']
         skillsno = request.POST['skillsno']
-        Resume = request.FILES['Resume']
-        profilepic = request.FILES['Profilepic']
-        logopic = request.FILES['logopic']
-        backpic = request.FILES['backpic']
-        user_profile = UserProfile.objects.create(
+        Resume = request.FILES.get('Resume')
+        profilepic = request.FILES.get('Profilepic')
+        logopic = request.FILES.get('logopic')
+        backpic = request.FILES.get('backpic')
+        try:
+            # Try to get an existing user profile object for this user
+            user_profile = UserProfile.objects.get(user=request.user)
+            # If a user profile exists for this user, update it with new values
+            user_profile.Country = country
+            user_profile.Profession = profession
+            user_profile.Description = about
+            user_profile.Github_link = gitlink
+            user_profile.Linkedin_link = linkedin
+            user_profile.Instagram_link = insta
+            user_profile.Phone_number = phno
+            user_profile.Skill_no = skillsno
+            user_profile.Certification_no = certificationno
+            user_profile.Cofee_no = cofee
+            user_profile.Resume = Resume
+            user_profile.profile_picture = profilepic
+            user_profile.logo_picture = logopic
+            user_profile.background_picture = backpic
+            user_profile.save()
+        except UserProfile.DoesNotExist:
+            user_profile = UserProfile.objects.create(
             user=request.user,
             Country= country,
             Profession= profession,
@@ -177,8 +215,8 @@ def UserDetails(request):
             profile_picture = profilepic,
             logo_picture = logopic,
             background_picture = backpic,
-        )
-        user_profile.save()
+            )
+            user_profile.save()
         if cloud == 'yes':
             for skill in cloud_skills.split(','):
                 Skill.objects.create(
@@ -214,6 +252,7 @@ def UserDetails(request):
                     skill_type='tools',
                     skill_name=skill.strip()
                 )
+        return render(request,'demodisplay.html')
         
         
                 
