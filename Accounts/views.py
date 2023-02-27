@@ -49,6 +49,7 @@ def signin(request):
             return redirect('signin')
     else:
         return render(request,'login.html')
+
 def signout(request):
     logout(request)
     messages.success(request,"Logged out successfully")
@@ -234,22 +235,13 @@ def UserDetails(request):
             project_description = request.POST.get("projectDescription" + str(i+1))
             project_picture = request.FILES.get("projectPicture" + str(i+1))
             project_link = request.POST.get("projectLink" + str(i+1))
-            try:
-                project = Project.objects.get(user = request.user)
-                project.project_category=project_category
-                project.project_name=project_name
-                project.project_description=project_description
-                project.project_picture=project_picture
-                project.project_link=project_link
-                project.save()
-            except Project.DoesNotExist:
-                project = Project.objects.create(user = request.user,
+            project = Project.objects.create(user = request.user,
                                          project_category=project_category,
                                          project_name=project_name,
                                          project_description=project_description,
                                          project_picture=project_picture,
                                          project_link=project_link)
-                project.save()
+            project.save()
         cofee = request.POST['cofee']
         certificationno = request.POST['certificationno']
         skillsno = request.POST['skillsno']
@@ -297,68 +289,52 @@ def UserDetails(request):
             user_profile.save()
         if cloud == 'yes':
             for skill in cloud_skills.split(','):
-                try:
-                    s=Skill.objects.get(user=request.user)
-                    s.skill_type='cloud'
-                    s.skill_name=skill.strip()
-                    s.save()
-                except Skill.DoesNotExist:
-                    Skill.objects.create(
+                Skill.objects.create(
                         user=request.user,
                         skill_type='cloud',
                         skill_name=skill.strip()
-                        )
+                    )
         if programming == 'yes':
             for skill in programming_skills.split(','):
-                try:
-                    s=Skill.objects.get(user=request.user)
-                    s.skill_type='programming'
-                    s.skill_name=skill.strip()
-
-                except Skill.DoesNotExist:
-                    Skill.objects.create(
+                Skill.objects.create(
                         user=request.user,
                         skill_type='programming',
                         skill_name=skill.strip()
-                        )
+                    )
         if os == 'yes':
             for skill in os_skills.split(','):
-                try:
-                    s=Skill.objects.get(user=request.user)
-                    s.skill_type='os'
-                    s.skill_name=skill.strip()
-                except Skill.DoesNotExist:
-                    Skill.objects.create(
+                Skill.objects.create(
                         user=request.user,
                         skill_type='os',
                         skill_name=skill.strip()
-                        )
+                    )
         if database == 'yes':
             for skill in database_skills.split(','):
-                try:
-                    s=Skill.objects.get(user=request.user)
-                    s.skill_type='database'
-                    s.skill_name=skill.strip()
-                except Skill.DoesNotExist:
-                    Skill.objects.create(
+                Skill.objects.create(
                         user=request.user,
                         skill_type='database',
                         skill_name=skill.strip()
-                        )
+                    )
         if tools == 'yes':
             for skill in tools_skills.split(','):
-                try:
-                    s=Skill.objects.get(user=request.user)
-                    s.skill_type='tools'
-                    s.skill_name=skill.strip()
-                except Skill.DoesNotExist:
-                    Skill.objects.create(
+                Skill.objects.create(
                         user=request.user,
                         skill_type='tools',
                         skill_name=skill.strip()
-                        )
-        return render(request,'demodisplay.html')
-        
+                    )
+        return redirect('Final')
+
+@login_required
+def Final(request):
+    profile = UserProfile.objects.get(user=request.user)
+    user = request.user
+    education = Education.objects.get(user=request.user)
+    project = Project.objects.filter(user=request.user)
+    skill = Skill.objects.filter(user=request.user)
+    contents = {'profile':profile,'user':user,'ed':education,'project':project,'skill':skill}
+    return render(request,'Profile.html',context=contents)
+
+
         
                 
 

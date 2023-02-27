@@ -464,7 +464,7 @@ header .container {
                   Fill the below details to genrate your own Profile Page 
                 </p>
                 <div class="form-container">
-                  <form action="/Accounts/UserForm" method="post">
+                  <form action="/Accounts/UserForm" method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     <input type="text" class="form-input" placeholder="Country" id="Country-input" name="country" required>
                     <input type="text" class="form-input" placeholder="Profession" id="Profession-input" name="profession" required>
@@ -621,21 +621,23 @@ header .container {
                     <br>
                     <label for="Resume">Upload your Resume</label>
                     <input type="file" class="form-input" name="Resume" required>
+                    <div class="right">
+                      <label for="Profilepic">Upload your Profile Picture: </label>
+                      <input type="file" class="form-input" name="Profilepic" required>
+                      <br>
+                      <label for="logopic">Upload your Logo Picture:</label>
+                      <input type="file" class="form-input" name="logopic" required>
+                      <br>
+                      <label for="backpic">Upload your Background Picture:</label>
+                      <input type="file" class="form-input" name="backpic" required>
+                      <br>
+                    </div>
                     <button type="submit" class="btn no-border" id="submit-button">Submit</button>
                   </form>
                 </div>
               </div>
   
               <div class="right">
-                <label for="Profilepic">Upload your Profile Picture: </label>
-                <input type="file" class="form-input" name="Profilepic" required>
-                <br>
-                <label for="logopic">Upload your Logo Picture:</label>
-                <input type="file" class="form-input" name="logopic" required>
-                <br>
-                <label for="backpic">Upload your Background Picture:</label>
-                <input type="file" class="form-input" name="backpic" required>
-                <br>
                 <img src="{% static 'Persona.png' %}" alt="Person Image" class="person" />
               </div>
             </div>
