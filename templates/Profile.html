@@ -188,21 +188,68 @@
             </div>
           </div>
           <div id="education">
+            {% if education.highest_edu == 'pg' %}
             <div class="education-item">
-              <h3>Bachelors in Electronics & Communication</h3>
-              <p>New Horizon College of Engineering, Bengaluru |  2022</p>
-              <p>CGPA: <b>9.05 / 10</b></p>
+              <h3>Masters in {{ education.pg_field }}</h3>
+              <p>{{ education.pg_univ }}, {{ education.pg_city }} |  {{ education.pg_year }}</p>
+              <p>Percentage: <b>{{ education.pg_percent }}</b></p>
             </div>
             <div class="education-item">
-              <h3>Intermediate in MPC</h3>
-              <p>Sri Chaitanya Jr College, Tirupathi |  2018</p>
-              <p>Marks: <b>972 / 1000</b></p>
+              <h3>Bachelors in {{ education.ug_field }}</h3>
+              <p>{{ education.ug_univ }}, {{ education.ug_city }} |  {{ education.ug_year }}</p>
+              <p>Percentage: <b>{{ education.ug_percent }}</b></p>
+            </div>
+            <div class="education-item">
+              <h3>Intermediate in {{ education.tlv_field }}</h3>
+              <p>{{ education.tlv_univ }}, {{ education.tlv_city }} |  {{ education.tlv_year }}</p>
+              <p>Percentage: <b>{{ education.tlv_percent }}</b></p>
             </div>
             <div class="education-item">
               <h3>SSC</h3>
-              <p>Keshavareddy English Medium HS, Anantapur |  2016</p>
-              <p>GPA: <b>9.3 / 10</b></p>
+              <p>{{ education.ten_univ }}, {{ education.ten_city }} |  {{ education.ten_year }}</p>
+              <p>Percentage: <b>{{ education.ten_percent }}</b></p>
             </div>
+
+            {% elif education.highest_edu == 'ug' %}
+
+            <div class="education-item">
+              <h3>Bachelors in {{ education.ug_field }}</h3>
+              <p>{{ education.ug_univ }}, {{ education.ug_city }} |  {{ education.ug_year }}</p>
+              <p>Percentage: <b>{{ education.ug_percent }}</b></p>
+            </div>
+            <div class="education-item">
+              <h3>Intermediate in {{ education.tlv_field }}</h3>
+              <p>{{ education.tlv_univ }}, {{ education.tlv_city }} |  {{ education.tlv_year }}</p>
+              <p>Percentage: <b>{{ education.tlv_percent }}</b></p>
+            </div>
+            <div class="education-item">
+              <h3>SSC</h3>
+              <p>{{ education.ten_univ }}, {{ education.ten_city }} |  {{ education.ten_year }}</p>
+              <p>Percentage: <b>{{ education.ten_percent }}</b></p>
+            </div>
+
+            {% elif education.highest_edu == '12th' %}
+
+            <div class="education-item">
+              <h3>Intermediate in {{ education.tlv_field }}</h3>
+              <p>{{ education.tlv_univ }}, {{ education.tlv_city }} |  {{ education.tlv_year }}</p>
+              <p>Percentage: <b>{{ education.tlv_percent }}</b></p>
+            </div>
+            <div class="education-item">
+              <h3>SSC</h3>
+              <p>{{ education.ten_univ }}, {{ education.ten_city }} |  {{ education.ten_year }}</p>
+              <p>Percentage: <b>{{ education.ten_percent }}</b></p>
+            </div>
+
+            {% else %}
+
+            <div class="education-item">
+              <h3>SSC</h3>
+              <p>{{ education.ten_univ }}, {{ education.ten_city }} |  {{ education.ten_year }}</p>
+              <p>Percentage: <b>{{ education.ten_percent }}</b></p>
+            </div>
+
+            {% endif %}
           </div>
         </div>
       </section>
@@ -237,58 +284,37 @@
             </div>
           </div>
           <div class="row no-gutters">
-          <div class="block-3 d-md-flex ftco-animate" data-scrollax-parent="true">
-            <a href="https://www.google.com/search?q=Lidar+based+self+driving+car" target="_blank" class="image d-flex justify-content-center align-items-center" style="background-image: url({% static 'images/work-1.jpg' %}); " data-scrollax=" properties: { translateY: '-30%'}">
-              <div class="icon d-flex text-center justify-content-center align-items-center">
-                <span class="icon-search"></span>
+            {% for project in project %}
+            {% if forloop.counter|divisibleby:2 %}
+            <div class="block-3 d-md-flex ftco-animate" data-scrollax-parent="true">
+              <a href="https://www.google.com/search?q={{ project.project_name }}" target="_blank" class="image d-flex justify-content-center align-items-center" style="background-image: url({{ project.project_picture.url }});" data-scrollax=" properties: { translateY: '-30%'}">
+                <div class="icon d-flex text-center justify-content-center align-items-center">
+                  <span class="icon-search"></span>
+                </div>
+              </a>
+              <div class="text">
+                <h4 class="subheading">{{ project.project_category }}</h4>
+                <h2 class="heading"><a>{{ project.project_name }}</a></h2>
+                <p>{{ project.project_description }}</p>
+                <p><a href="{{ project.project_link }}" target="_blank">View Project</a></p>
               </div>
-            </a>
-            <div class="text">
-              <h4 class="subheading">Autonomous</h4>
-              <h2 class="heading"><a>Eyes of the future: Lidar self-driving cars</a></h2>
-              <p>Revolutionizing transportation with our Lidar-based self-driving car technology, ensuring a safer, more efficient future on the road.</p>
-              <p><a href="https://github.com/vbvasu/Mini-Projects-Stuff/tree/main/Lidar-Based-Self-Driving-Car" target="_blank">View Project</a></p>
             </div>
-          </div>
-          <div class="block-3 d-md-flex ftco-animate" data-scrollax-parent="true">
-            <a href="https://www.google.com/search?q=FingerPrint+Based+voting+system" target="_blank" class="image order-2 d-flex justify-content-center align-items-center" style="background-image: url({% static 'images/work-2.jpg' %}); " data-scrollax=" properties: { translateY: '-30%'}">
-              <div class="icon d-flex text-center justify-content-center align-items-center">
-                <span class="icon-search"></span>
+            {% else %}
+            <div class="block-3 d-md-flex ftco-animate" data-scrollax-parent="true">
+              <a href="https://www.google.com/search?q={{project.project_name}}" target="_blank" class="image order-2 d-flex justify-content-center align-items-center" style="background-image: url({{ project.project_picture.url }});" data-scrollax=" properties: { translateY: '-30%'}">
+                <div class="icon d-flex text-center justify-content-center align-items-center">
+                  <span class="icon-search"></span>
+                </div>
+              </a>
+              <div class="text order-1">
+                <h4 class="subheading">{{ project.project_category }}</h4>
+                <h2 class="heading"><a>{{ project.project_name }}</a></h2>
+                <p>{{ project.project_description }}</p>
+                <p><a href="{{ project.project_link }}" target="_blank">View Project</a></p>
               </div>
-            </a>
-            <div class="text order-1">
-              <h4 class="subheading">Biometric</h4>
-              <h2 class="heading"><a>Fingerprint voting: A step towards a transparent democracy</a></h2>
-              <p>Fingerprint-based voting system revolutionizes the traditional voting process with added security and accessibility. Say goodbye to paper ballots and hello to a more efficient and accurate voting experience.</p>
-              <p><a href="https://github.com/vbvasu/Mini-Projects-Stuff/tree/main/FingerPrint-Based-Voting-System" target="_blank">View Project</a></p>
             </div>
-          </div>
-          <div class="block-3 d-md-flex ftco-animate" data-scrollax-parent="true">
-            <a href="https://www.google.com/search?q=Gesture+Control+Automated+Vehicle" target="_blank" class="image d-flex justify-content-center align-items-center" style="background-image: url({% static 'images/work-3.jpg' %}); " data-scrollax=" properties: { translateY: '-30%'}">
-              <div class="icon d-flex text-center justify-content-center align-items-center">
-                <span class="icon-search"></span>
-              </div>
-            </a>
-            <div class="text">
-              <h4 class="subheading">Innovative</h4>
-              <h2 class="heading"><a>Revolutionizing mobility through gesture control technology</a></h2>
-              <p>Experience the future with gesture control technology, our automated vehicle project aims to enhance the driving experience through intuitive and seamless interactions.</p>
-              <p><a href="https://github.com/vbvasu/Mini-Projects-Stuff/tree/main/Gesture-Control-Automated-Vehicle" target="_blank">View Project</a></p>
-            </div>
-          </div>
-          <div class="block-3 d-md-flex ftco-animate" data-scrollax-parent="true">
-            <a href="/Accounts/register" target="_blank" class="image order-2 d-flex justify-content-center align-items-center" style="background-image: url({% static 'images/Profile.jpg' %}); " data-scrollax=" properties: { translateY: '-30%'}">
-              <div class="icon d-flex text-center justify-content-center align-items-center">
-                <span class="icon-search"></span>
-              </div>
-            </a>
-            <div class="text order-1">
-              <h4 class="subheading">Web</h4>
-              <h2 class="heading"><a>Profile-Registration-System.</a></h2>
-              <p>This Project allows users to easily create a professional website using your information. Simply click on the Picture to navigate to the process.</p>
-              <p><a href="https://github.com/vbvasu/Mini-Projects-Stuff/tree/main/FingerPrint-Based-Voting-System" target="_blank">View Project</a></p>
-            </div>
-          </div>
+            {% endif %}
+            {% endfor %}
           </div>
         </div>
         </div>

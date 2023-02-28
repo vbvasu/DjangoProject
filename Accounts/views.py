@@ -331,7 +331,7 @@ def Final(request):
     education = Education.objects.get(user=request.user)
     project = Project.objects.filter(user=request.user)
     skill = Skill.objects.filter(user=request.user)
-    contents = {'profile':profile,'user':user,'ed':education,'project':project,'skill':skill}
+    contents = {'profile':profile,'user':user,'education':education,'project':project,'skill':skill}
     return render(request,'Profile.html',context=contents)
 
 

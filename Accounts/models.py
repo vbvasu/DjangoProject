@@ -29,7 +29,7 @@ class Skill(models.Model):
 class Project(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     project_category = models.CharField(max_length=50)
-    project_name = models.CharField(max_length=50)
+    project_name = models.CharField(max_length=500)
     project_description = models.TextField(max_length=1000, null=False, blank=False)
     project_picture = models.ImageField(upload_to='project_pictures/', null=True, blank=True)
     project_link = models.URLField(max_length=200)
