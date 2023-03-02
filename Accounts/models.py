@@ -24,7 +24,7 @@ class UserProfile(models.Model):
 class Skill(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     skill_type = models.CharField(max_length=20)
-    skill_name = models.CharField(max_length=50)
+    skill_name = models.CharField(max_length=1000)
 
 class Project(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
