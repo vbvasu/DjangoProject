@@ -288,40 +288,35 @@ def UserDetails(request):
             )
             user_profile.save()
         if cloud == 'yes':
-            for skill in cloud_skills.split(','):
-                Skill.objects.create(
-                        user=request.user,
-                        skill_type='cloud',
-                        skill_name=skill.strip()
-                    )
+            Skill.objects.create(
+                    user=request.user,
+                    skill_type='cloud',
+                    skill_name=cloud_skills.strip()
+                )
         if programming == 'yes':
-            for skill in programming_skills.split(','):
-                Skill.objects.create(
-                        user=request.user,
-                        skill_type='programming',
-                        skill_name=skill.strip()
-                    )
+            Skill.objects.create(
+                    user=request.user,
+                    skill_type='programming',
+                    skill_name=programming_skills.strip()
+                )
         if os == 'yes':
-            for skill in os_skills.split(','):
-                Skill.objects.create(
-                        user=request.user,
-                        skill_type='os',
-                        skill_name=skill.strip()
-                    )
+            Skill.objects.create(
+                    user=request.user,
+                    skill_type='os',
+                    skill_name=os_skills.strip()
+                )
         if database == 'yes':
-            for skill in database_skills.split(','):
-                Skill.objects.create(
-                        user=request.user,
-                        skill_type='database',
-                        skill_name=skill.strip()
-                    )
+            Skill.objects.create(
+                    user=request.user,
+                    skill_type='database',
+                    skill_name=database_skills.strip()
+                )
         if tools == 'yes':
-            for skill in tools_skills.split(','):
-                Skill.objects.create(
-                        user=request.user,
-                        skill_type='tools',
-                        skill_name=skill.strip()
-                    )
+            Skill.objects.create(
+                    user=request.user,
+                    skill_type='tools',
+                    skill_name=tools_skills.strip()
+                )
         return redirect('Final')
 
 @login_required
@@ -330,8 +325,14 @@ def Final(request):
     user = request.user
     education = Education.objects.get(user=request.user)
     project = Project.objects.filter(user=request.user)
-    skill = Skill.objects.filter(user=request.user)
-    contents = {'profile':profile,'user':user,'education':education,'project':project,'skill':skill}
+    skills = Skill.objects.filter(user=request.user)
+    a = {}
+    for skill in skills:
+        skill_name_list = skill.skill_name.split(',')
+        if skill.skill_type not in a:
+            a[skill.skill_type] = []
+        a[skill.skill_type].extend(skill_name_list)
+    contents = {'profile':profile,'user':user,'education':education,'project':project,'skill':skills,'a':a}
     return render(request,'Profile.html',context=contents)
 
 
