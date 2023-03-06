@@ -128,54 +128,74 @@
             </div>
           </div>
           <div class="row">
+            {% for skill_type, skill_name_list in a.items %}
+            {% if skill_type == 'programming' %}
+            {% for chunk in skill_name_list %}
             <div class="col-md-4 d-flex align-self-stretch ftco-animate">
               <div class="media block-6 services p-3 py-4 d-block text-center">
                 <div class="icon mb-3"><span class="icon-code"></span></div>
                 <div class="media-body">
-                  <h3 class="heading">C</h3>
-                  <h3 class="heading">Python / Java</h3>
-                  <h3 class="heading">SQL</h3>
+                  {% for skill_name in chunk %}
+                  <h3 class="heading">{{ skill_name }}</h3>
+                  {% endfor %}
                 </div>
               </div>      
             </div>
+            {% endfor %}
+            {% elif skill_type == 'cloud' %}
+            {% for chunk in skill_name_list %}
             <div class="col-md-4 d-flex align-self-stretch ftco-animate">
               <div class="media block-6 services p-3 py-4 d-block text-center">
                 <div class="icon mb-3"><span class="icon-cloud"></span></div>
                 <div class="media-body">
-                  <h3 class="heading">AWS</h3>
-                  <h3 class="heading">Azure</h3>
+                  {% for skill_name in chunk %}
+                  <h3 class="heading">{{ skill_name }}</h3>
+                  {% endfor %}
                 </div>
               </div>      
             </div>
+            {% endfor %}
+            {% elif skill_type == 'os' %}
+            {% for chunk in skill_name_list %}
             <div class="col-md-4 d-flex align-self-stretch ftco-animate">
               <div class="media block-6 services p-3 py-4 d-block text-center">
                 <div class="icon mb-3"><span class="icon-desktop"></span></div>
                 <div class="media-body">
-                  <h3 class="heading">Windows</h3>
-                  <h3 class="heading">Linux</h3>
+                  {% for skill_name in chunk %}
+                  <h3 class="heading">{{ skill_name }}</h3>
+                  {% endfor %}
                 </div>
               </div>    
             </div>
+            {% endfor %}
+            {% elif skill_type == 'database' %}
+            {% for chunk in skill_name_list %}
             <div class="col-md-4 d-flex align-self-stretch ftco-animate">
               <div class="media block-6 services p-3 py-4 d-block text-center">
                 <div class="icon mb-3"><span class="icon-database"></span></div>
                 <div class="media-body">
-                  <h3 class="heading">Oracle DBA</h3>
-                  <h3 class="heading">Sybase ASE DBA</h3>
+                  {% for skill_name in chunk %}
+                  <h3 class="heading">{{ skill_name }}</h3>
+                  {% endfor %}
                 </div>
               </div>    
             </div>
+            {% endfor %}
+            {% else %}
+            {% for chunk in skill_name_list %}
             <div class="col-md-4 d-flex align-self-stretch ftco-animate">
               <div class="media block-6 services p-3 py-4 d-block text-center">
                 <div class="icon mb-3"><span class="icon-gear"></span></div>
                 <div class="media-body">
-                  <h3 class="heading">Git</h3>
-                  <h3 class="heading">Docker</h3>
-                  <h3 class="heading">Jenkins</h3>
-                  <h3 class="heading">Terraform</h3>
+                  {% for skill_name in chunk %}
+                  <h3 class="heading">{{ skill_name }}</h3>
+                  {% endfor %}
                 </div>
               </div>    
             </div>
+            {% endfor %}
+            {% endif %}
+            {% endfor %}
           </div>
         </div>
       </section>

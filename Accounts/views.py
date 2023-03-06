@@ -4,6 +4,8 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from Accounts.models import Education, Skill, UserProfile, Project
+from more_itertools import chunked
+
 
 # Create your views here.
 def register(request):
@@ -43,7 +45,11 @@ def signin(request):
         if user is not None:
             login(request, user)
             x=User.objects.get(username=Username)
-            return render(request,'Useraccount.html',{'name': x.first_name+" "+x.last_name })
+            try:
+                profile = UserProfile.objects.get(user=user)
+                return redirect('Final')
+            except UserProfile.DoesNotExist:
+                return render(request,'Useraccount.html',{'name': x.first_name+" "+x.last_name })
         else:
             messages.error(request,"Wrong Username or Password")
             return redirect('signin')
@@ -58,15 +64,16 @@ def signout(request):
 @login_required
 def UserDetails(request):
     if request.method == 'POST':
+        request.session['form_submitted'] = True
         country = request.POST['country']
-        profession = request.POST['profession']
+        profession = request.POST['profession']            
         about = request.POST['about']
         gitlink = request.POST['gitlink']
         linkedin = request.POST['linkedin']
         insta = request.POST['instalink']
         phno  = request.POST['phno']
         cloud = request.POST['cloud']
-        cloud_skills = request.POST['cskills']
+        cloud_skills = request.POST['cskills']            
         programming = request.POST['programming']
         programming_skills = request.POST['pskills']
         os = request.POST['os']
@@ -167,9 +174,9 @@ def UserDetails(request):
                 edu.save()
             except Education.DoesNotExist:
                 edu = Education.objects.create(user=request.user ,highest_edu=highest_edu,
-                                               ug_field=ug_field,ug_univ=ug_univ,ug_city=ug_city,ug_year=ug_year,ug_percent=ug_percent,
-                                               tlv_field=tlv_field,tlv_univ=tlv_univ,tlv_city=tlv_city,tlv_year=tlv_year,tlv_percent=tlv_percent,
-                                               ten_univ=ten_univ,ten_city=ten_city,ten_year=ten_year,ten_percent=ten_percent)
+                                            ug_field=ug_field,ug_univ=ug_univ,ug_city=ug_city,ug_year=ug_year,ug_percent=ug_percent,
+                                            tlv_field=tlv_field,tlv_univ=tlv_univ,tlv_city=tlv_city,tlv_year=tlv_year,tlv_percent=tlv_percent,
+                                            ten_univ=ten_univ,ten_city=ten_city,ten_year=ten_year,ten_percent=ten_percent)
                 edu.save()
 
         elif highest_edu == '12th':
@@ -199,8 +206,8 @@ def UserDetails(request):
                 edu.save()
             except Education.DoesNotExist:
                 edu = Education.objects.create(user=request.user ,highest_edu=highest_edu,
-                                               tlv_field=tlv_field,tlv_univ=tlv_univ,tlv_city=tlv_city,tlv_year=tlv_year,tlv_percent=tlv_percent,
-                                               ten_univ=ten_univ,ten_city=ten_city,ten_year=ten_year,ten_percent=ten_percent)
+                                            tlv_field=tlv_field,tlv_univ=tlv_univ,tlv_city=tlv_city,tlv_year=tlv_year,tlv_percent=tlv_percent,
+                                            ten_univ=ten_univ,ten_city=ten_city,ten_year=ten_year,ten_percent=ten_percent)
                 edu.save()
 
 
@@ -220,9 +227,9 @@ def UserDetails(request):
                 edu.save()
             except Education.DoesNotExist:
                 edu = Education.objects.create(user=request.user ,highest_edu=highest_edu,
-                                               ten_univ=ten_univ,ten_city=ten_city,ten_year=ten_year,ten_percent=ten_percent)
+                                            ten_univ=ten_univ,ten_city=ten_city,ten_year=ten_year,ten_percent=ten_percent)
                 edu.save()
-           
+        
         else:   
             pass
         num_projects = 0
@@ -236,11 +243,11 @@ def UserDetails(request):
             project_picture = request.FILES.get("projectPicture" + str(i+1))
             project_link = request.POST.get("projectLink" + str(i+1))
             project = Project.objects.create(user = request.user,
-                                         project_category=project_category,
-                                         project_name=project_name,
-                                         project_description=project_description,
-                                         project_picture=project_picture,
-                                         project_link=project_link)
+                                        project_category=project_category,
+                                        project_name=project_name,
+                                        project_description=project_description,
+                                        project_picture=project_picture,
+                                        project_link=project_link)
             project.save()
         cofee = request.POST['cofee']
         certificationno = request.POST['certificationno']
@@ -288,40 +295,35 @@ def UserDetails(request):
             )
             user_profile.save()
         if cloud == 'yes':
-            for skill in cloud_skills.split(','):
-                Skill.objects.create(
-                        user=request.user,
-                        skill_type='cloud',
-                        skill_name=skill.strip()
-                    )
+            Skill.objects.create(
+                    user=request.user,
+                    skill_type='cloud',
+                    skill_name=cloud_skills.strip()
+                )
         if programming == 'yes':
-            for skill in programming_skills.split(','):
-                Skill.objects.create(
-                        user=request.user,
-                        skill_type='programming',
-                        skill_name=skill.strip()
-                    )
+            Skill.objects.create(
+                    user=request.user,
+                    skill_type='programming',
+                    skill_name=programming_skills.strip()
+                )
         if os == 'yes':
-            for skill in os_skills.split(','):
-                Skill.objects.create(
-                        user=request.user,
-                        skill_type='os',
-                        skill_name=skill.strip()
-                    )
+            Skill.objects.create(
+                    user=request.user,
+                    skill_type='os',
+                    skill_name=os_skills.strip()
+                )
         if database == 'yes':
-            for skill in database_skills.split(','):
-                Skill.objects.create(
-                        user=request.user,
-                        skill_type='database',
-                        skill_name=skill.strip()
-                    )
+            Skill.objects.create(
+                    user=request.user,
+                    skill_type='database',
+                    skill_name=database_skills.strip()
+                )
         if tools == 'yes':
-            for skill in tools_skills.split(','):
-                Skill.objects.create(
-                        user=request.user,
-                        skill_type='tools',
-                        skill_name=skill.strip()
-                    )
+            Skill.objects.create(
+                    user=request.user,
+                    skill_type='tools',
+                    skill_name=tools_skills.strip()
+                )
         return redirect('Final')
 
 @login_required
@@ -330,8 +332,16 @@ def Final(request):
     user = request.user
     education = Education.objects.get(user=request.user)
     project = Project.objects.filter(user=request.user)
-    skill = Skill.objects.filter(user=request.user)
-    contents = {'profile':profile,'user':user,'education':education,'project':project,'skill':skill}
+    skills = Skill.objects.filter(user=request.user)
+    a = {}
+    for skill in skills:
+        skill_name_list = skill.skill_name.split(',')
+        chunk_size = 4
+        skill_name_chunks = list(chunked(skill_name_list, chunk_size))
+        if skill.skill_type not in a:
+            a[skill.skill_type] = []
+        a[skill.skill_type].extend(skill_name_chunks)
+    contents = {'profile':profile,'user':user,'education':education,'project':project,'skill':skill,'a':a}
     return render(request,'Profile.html',context=contents)
 
 
