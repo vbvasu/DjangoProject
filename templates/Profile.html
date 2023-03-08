@@ -130,60 +130,70 @@
           <div class="row">
             {% for skill_type, skill_name_list in a.items %}
             {% if skill_type == 'programming' %}
+            {% for chunk in skill_name_list %}
             <div class="col-md-4 d-flex align-self-stretch ftco-animate">
               <div class="media block-6 services p-3 py-4 d-block text-center">
                 <div class="icon mb-3"><span class="icon-code"></span></div>
                 <div class="media-body">
-                  {% for skill_name in skill_name_list %}
+                  {% for skill_name in chunk %}
                   <h3 class="heading">{{ skill_name }}</h3>
                   {% endfor %}
                 </div>
               </div>      
             </div>
+            {% endfor %}
             {% elif skill_type == 'cloud' %}
+            {% for chunk in skill_name_list %}
             <div class="col-md-4 d-flex align-self-stretch ftco-animate">
               <div class="media block-6 services p-3 py-4 d-block text-center">
                 <div class="icon mb-3"><span class="icon-cloud"></span></div>
                 <div class="media-body">
-                  {% for skill_name in skill_name_list %}
+                  {% for skill_name in chunk %}
                   <h3 class="heading">{{ skill_name }}</h3>
                   {% endfor %}
                 </div>
               </div>      
             </div>
+            {% endfor %}
             {% elif skill_type == 'os' %}
+            {% for chunk in skill_name_list %}
             <div class="col-md-4 d-flex align-self-stretch ftco-animate">
               <div class="media block-6 services p-3 py-4 d-block text-center">
                 <div class="icon mb-3"><span class="icon-desktop"></span></div>
                 <div class="media-body">
-                  {% for skill_name in skill_name_list %}
+                  {% for skill_name in chunk %}
                   <h3 class="heading">{{ skill_name }}</h3>
                   {% endfor %}
                 </div>
               </div>    
             </div>
+            {% endfor %}
             {% elif skill_type == 'database' %}
+            {% for chunk in skill_name_list %}
             <div class="col-md-4 d-flex align-self-stretch ftco-animate">
               <div class="media block-6 services p-3 py-4 d-block text-center">
                 <div class="icon mb-3"><span class="icon-database"></span></div>
                 <div class="media-body">
-                  {% for skill_name in skill_name_list %}
+                  {% for skill_name in chunk %}
                   <h3 class="heading">{{ skill_name }}</h3>
                   {% endfor %}
                 </div>
               </div>    
             </div>
+            {% endfor %}
             {% else %}
+            {% for chunk in skill_name_list %}
             <div class="col-md-4 d-flex align-self-stretch ftco-animate">
               <div class="media block-6 services p-3 py-4 d-block text-center">
                 <div class="icon mb-3"><span class="icon-gear"></span></div>
                 <div class="media-body">
-                  {% for skill_name in skill_name_list %}
+                  {% for skill_name in chunk %}
                   <h3 class="heading">{{ skill_name }}</h3>
                   {% endfor %}
                 </div>
               </div>    
             </div>
+            {% endfor %}
             {% endif %}
             {% endfor %}
           </div>
